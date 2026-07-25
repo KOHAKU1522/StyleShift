@@ -9,6 +9,8 @@ import {
 import { db } from "../firebase";
 import { CHARACTER_MAP } from "../data/characters";
 
+const MAX_COUNT = 1000;
+
 // Firestore のコレクション名。1キャラクター = 1ドキュメント（ドキュメントID = mode）。
 const COLLECTION = "characterUsage";
 
@@ -48,8 +50,8 @@ export async function incrementCharacterUsage(mode) {
   // 荒らし対策: 加算後の実際の値を読み取り、100を超えていたら半分にする
   const snap = await getDoc(ref);
   const current = snap.data()?.count ?? 0;
-  if (current > 100) {
-    await setDoc(ref, { count: Math.floor(current / 2) }, { merge: true });
+  if (current > MAX_COUNT) {
+    await setDoc(ref, { count: MAX_COUNT }, { merge: true });
   }
 }
 
