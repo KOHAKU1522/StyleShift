@@ -7,14 +7,22 @@
   "theme_color": "#ffffff",
   "icons": [
     {
-      "src": "/images/Gemini_Generated_Image_wxcg5wxcg5wxcg5w.png",
+      "src": "/images/icon-192.png",
       "sizes": "192x192",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any"
     },
     {
-      "src": "/images/Gemini_Generated_Image_wxcg5wxcg5wxcg5w.png",
+      "src": "/images/icon-512.png",
       "sizes": "512x512",
-      "type": "image/png"
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/images/icon-512-maskable.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
     }
   ]
 }
