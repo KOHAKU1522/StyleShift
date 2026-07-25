@@ -1,0 +1,20 @@
+{
+  "name": "StyleShift",
+  "short_name": "StyleShift",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#ffffff",
+  "icons": [
+    {
+      "src": "/images/Gemini_Generated_Image_wxcg5wxcg5wxcg5w.png",
+      "sizes": "192x192",
+      "type": "image/png"
+    },
+    {
+      "src": "/images/Gemini_Generated_Image_wxcg5wxcg5wxcg5w.png",
+      "sizes": "512x512",
+      "type": "image/png"
+    }
+  ]
+}
