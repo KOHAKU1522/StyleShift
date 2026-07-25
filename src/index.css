@@ -129,3 +129,22 @@ body::before {
       rgba(90, 200, 245, 0) 60%
     );
 }
+
+/* 背景画像レイヤー（グラデの上・光の粒とコンテンツの下に半透明で重ねる） */
+body::after {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -2;
+  pointer-events: none;
+  background-image: url("/images/Gemini_Generated_Image_169twi169twi169t.png");
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  opacity: 0.18;
+}
+
+/* ダークテーマでは少し控えめに */
+[data-theme="dark"] body::after {
+  opacity: 0.12;
+}

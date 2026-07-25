@@ -1,6 +1,6 @@
 import styles from "./HomePage.module.css";
 
-import { useRef, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 import { convertText } from "../api/gemini";
 
 import StyleSelect from "../components/StyleSelect/StyleSelect";
@@ -10,9 +10,13 @@ import { incrementCharacterUsage } from "../api/ranking";
 import Footer from "../components/Footer/Footer";
 import { addHistory } from "../api/history";
 
+// テキストエリアの初期値（ここを書き換えると初期表示テキストが変わる）
+const INITIAL_INPUT = `こんにちは！今日は天気がいいね。
+午後は友達とカフェに行く予定だから楽しみ！`;
+
 export default function HomePage() {
-    const [inputText, setInputText] = useState("");
-    const [mode, setMode] = useState("soften");
+    const [inputText, setInputText] = useState(INITIAL_INPUT);
+    const [mode, setMode] = useState("honorific");
     const [resultText, setResultText] = useState("");
     const [isLoading, setIsLoading] = useState(false);
     const [copied, setCopied] = useState(false);
@@ -25,6 +29,11 @@ export default function HomePage() {
         el.style.height = "auto";
         el.style.height = `${Math.min(el.scrollHeight, 220)}px`;
     };
+
+    // 初期値が入っている場合に、マウント時の高さを合わせる
+    useEffect(() => {
+        autoGrow(textareaRef.current);
+    }, []);
 
     const handleChange = (e) => {
         setInputText(e.target.value);

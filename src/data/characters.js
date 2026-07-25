@@ -16,8 +16,8 @@ export const GENRES = [
 
 // mode → genre / color（label は持たない）
 const META = [
-  { mode: "soften", genre: "rewrite", color: "#4f6ef7" },
   { mode: "honorific", genre: "rewrite", color: "#2fb27a" },
+  { mode: "soften", genre: "rewrite", color: "#4f6ef7" },
   { mode: "business", genre: "rewrite", color: "#f59e0b" },
   { mode: "casual", genre: "rewrite", color: "#ef5b6b" },
   { mode: "summary", genre: "rewrite", color: "#8b5cf6" },
