@@ -1,0 +1,131 @@
+:root {
+  --black: #000000;
+  --white: #ffffff;
+
+  /* Brand — Frutiger Aero aqua → fresh green */
+  --brand: #17b3e8;
+  --brand-hover: #0f9fd4;
+  --brand-2: #3fd08a;
+  --brand-soft: rgba(23, 179, 232, 0.14);
+  --brand-gradient: linear-gradient(135deg, #29c3ec 0%, #45d69a 100%);
+
+  /* Background — sky to grass */
+  --bg: #cfeefc;
+  --bg-gradient: linear-gradient(180deg, #8ed6f4 0%, #c7ecf6 42%, #ddf3e2 100%);
+
+  /* Glass surfaces */
+  --surface: rgba(255, 255, 255, 0.66);
+  --surface-solid: #ffffff;
+  --surface-muted: rgba(255, 255, 255, 0.48);
+  --glass-border: rgba(255, 255, 255, 0.7);
+  --gloss: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.75) 0%,
+    rgba(255, 255, 255, 0.12) 55%,
+    rgba(255, 255, 255, 0) 100%
+  );
+
+  /* Text — deep teal ink */
+  --text: #103a4c;
+  --text-muted: #4a6f7d;
+  --text-faint: #86a6b1;
+
+  /* Borders & effects */
+  --border: rgba(120, 170, 190, 0.35);
+  --border-strong: rgba(90, 150, 175, 0.5);
+  --shadow-sm: 0 1px 2px rgba(20, 70, 90, 0.1);
+  --shadow-md: 0 12px 30px rgba(20, 90, 120, 0.18);
+  --shadow-lg: 0 22px 50px rgba(20, 90, 120, 0.26);
+
+  /* Semantic */
+  --danger: #ef5b6b;
+  --danger-soft: rgba(239, 91, 107, 0.14);
+  --success: #2fb27a;
+
+  /* Shape */
+  --radius-sm: 12px;
+  --radius-md: 16px;
+  --radius-lg: 24px;
+}
+
+[data-theme="dark"] {
+  --brand: #4fd0f5;
+  --brand-hover: #74dcff;
+  --brand-2: #3fd08a;
+  --brand-soft: rgba(79, 208, 245, 0.16);
+  --brand-gradient: linear-gradient(135deg, #2bb8e6 0%, #33d39a 100%);
+
+  --bg: #071722;
+  --bg-gradient: linear-gradient(180deg, #0b2637 0%, #0a1a26 55%, #082019 100%);
+
+  --surface: rgba(20, 42, 56, 0.6);
+  --surface-solid: #122634;
+  --surface-muted: rgba(255, 255, 255, 0.06);
+  --glass-border: rgba(120, 200, 225, 0.2);
+  --gloss: linear-gradient(
+    180deg,
+    rgba(255, 255, 255, 0.14) 0%,
+    rgba(255, 255, 255, 0.03) 55%,
+    rgba(255, 255, 255, 0) 100%
+  );
+
+  --text: #e6f6fb;
+  --text-muted: #a9c6d1;
+  --text-faint: #6f95a3;
+
+  --border: rgba(120, 190, 215, 0.2);
+  --border-strong: rgba(120, 190, 215, 0.34);
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, 0.3);
+  --shadow-md: 0 12px 30px rgba(0, 0, 0, 0.38);
+  --shadow-lg: 0 22px 50px rgba(0, 0, 0, 0.5);
+
+  --danger: #ff7080;
+  --danger-soft: rgba(255, 112, 128, 0.16);
+  --success: #46c98d;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100%;
+}
+
+body {
+  font-family: "Segoe UI", "Hiragino Kaku Gothic ProN", "Yu Gothic UI", system-ui,
+    -apple-system, sans-serif;
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+  /* 空〜緑のグラデに、やわらかい光の玉（ボケ）を重ねた Frutiger Aero 背景 */
+  background: var(--bg-gradient) fixed;
+  transition: color 0.3s ease;
+}
+
+/* 背景の光の粒（バブル）レイヤー */
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  z-index: -1;
+  pointer-events: none;
+  background:
+    radial-gradient(
+      420px 420px at 12% 8%,
+      rgba(255, 255, 255, 0.55),
+      rgba(255, 255, 255, 0) 60%
+    ),
+    radial-gradient(
+      360px 360px at 88% 18%,
+      rgba(120, 235, 200, 0.35),
+      rgba(120, 235, 200, 0) 62%
+    ),
+    radial-gradient(
+      500px 500px at 78% 92%,
+      rgba(90, 200, 245, 0.3),
+      rgba(90, 200, 245, 0) 60%
+    );
+}

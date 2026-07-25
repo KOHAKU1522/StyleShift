@@ -1,0 +1,26 @@
+rules_version = '2';
+service cloud.firestore {
+  match /databases/{database}/documents {
+
+    // ランキング集計コレクション（characterUsage/{モード名}）
+    match /characterUsage/{mode} {
+      // 読み取りは全員OK（ランキング表示に必要）
+      allow read: if true;
+      // 書き込みは「count(数値・0〜100000)」のみに限定。
+      // これで他フィールドの追加・巨大な値の投入・別コレクションの作成を防ぐ。
+      allow write: if isValidUsage();
+    }
+
+    // 上記以外のパスはすべて読み書き禁止
+    match /{document=**} {
+      allow read, write: if false;
+    }
+
+    function isValidUsage() {
+      return request.resource.data.keys().hasOnly(['count'])
+        && request.resource.data.count is number
+        && request.resource.data.count >= 0
+        && request.resource.data.count <= 100000;
+    }
+  }
+}

@@ -1,0 +1,13 @@
+# Netlify のビルド・ホスティング設定
+
+[build]
+  command = "npm run build"
+  publish = "dist"
+  functions = "netlify/functions"
+
+# SPA(React Router)用: どのパスでも index.html を返す（/history を直接開いても404にしない）
+# ※ Functions への /.netlify/functions/* は自動で除外される
+[[redirects]]
+  from = "/*"
+  to = "/index.html"
+  status = 200
