@@ -105,7 +105,7 @@ body {
   transition: color 0.3s ease;
 }
 
-/* 背景の光の粒（バブル）レイヤー */
+/* backGround 背景 グラデーション */
 body::before {
   content: "";
   position: fixed;
@@ -130,7 +130,7 @@ body::before {
     );
 }
 
-/* 背景画像レイヤー（グラデの上・光の粒とコンテンツの下に半透明で重ねる） */
+/* backGround設定 半透明でグラデーションと重ねる */
 body::after {
   content: "";
   position: fixed;
@@ -141,10 +141,5 @@ body::after {
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
-  opacity: 0.6;
-}
-
-/* ダークテーマでは少し控えめに */
-[data-theme="dark"] body::after {
-  opacity: 0.12;
+  opacity: 0.5;
 }
