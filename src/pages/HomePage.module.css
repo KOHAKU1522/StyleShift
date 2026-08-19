@@ -188,6 +188,20 @@ button:disabled {
   box-shadow: var(--shadow-lg), inset 0 1px 0 rgba(255, 255, 255, 0.8);
 }
 
+/* Play (読み上げ) button */
+.playButton {
+  padding: 8px 12px;
+  font-size: 14px;
+  border-radius: var(--radius-sm);
+  border: 1px solid var(--glass-border);
+  background: var(--surface-muted);
+  color: var(--text);
+}
+
+.playButton:hover:not(:disabled) {
+  filter: brightness(1.02);
+}
+
 /* ---------- Result ---------- */
 .resultContainer {
   min-height: 120px;

@@ -2,7 +2,7 @@
 // APIキー(GEMINI_API_KEY)はサーバー側の環境変数から読むため、ブラウザには一切露出しない。
 // フロントは組み立て済みの prompt と temperature を送るだけ。
 
-const MODEL = "gemini-flash-lite-latest";
+const MODEL = "gemini-2.5-flash-lite";
 const ENDPOINT = `https://generativelanguage.googleapis.com/v1beta/models/${MODEL}:generateContent`;
 
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
@@ -51,10 +51,21 @@ export async function handler(event) {
       const data = await res.json();
 
       if (res.ok) {
-        const text =
-          data?.candidates?.[0]?.content?.parts
-            ?.map((p) => p.text ?? "")
-            .join("") ?? "";
+        const candidate = data?.candidates?.[0];
+        const text = candidate?.content?.parts
+          ?.map((p) => p.text ?? "")
+          .join("")
+          .trim();
+
+        if (!text) {
+          return json(502, {
+            error:
+              candidate?.finishReason === "SAFETY"
+                ? "安全上の理由により変換できませんでした。"
+                : "Gemini から変換結果が返されませんでした。",
+          });
+        }
+
         return json(200, { text });
       }
 

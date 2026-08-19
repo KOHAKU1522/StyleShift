@@ -9,6 +9,7 @@ import { incrementCharacterUsage } from "../api/ranking";
 
 import Footer from "../components/Footer/Footer";
 import { addHistory } from "../api/history";
+import VoiceInput from "../components/VoiceInput/VoiceInput";
 
 // テキストエリアの初期値（ここを書き換えると初期表示テキストが変わる）
 const INITIAL_INPUT = `こんにちは！今日は天気がいいね。
@@ -95,6 +96,19 @@ export default function HomePage() {
         }
     };
 
+    const speakText = (text) => {
+        if (!text) return;
+        if (typeof window === "undefined" || !window.speechSynthesis) return;
+        try {
+            window.speechSynthesis.cancel();
+        } catch (e) {}
+        const u = new SpeechSynthesisUtterance(text);
+        u.lang = "ja-JP";
+        u.rate = 1;
+        u.pitch = 1;
+        window.speechSynthesis.speak(u);
+    };
+
     return (
         <>
             <div className={styles.home}>
@@ -126,6 +140,8 @@ export default function HomePage() {
                             value={inputText}
                             onChange={handleChange}
                         />
+
+                        <VoiceInput value={inputText} onChange={setInputText} textareaRef={textareaRef} />
                     </div>
 
                     <div className={styles.field}>
@@ -172,6 +188,15 @@ export default function HomePage() {
                             aria-label="もう一度変換"
                         >
                             ↻
+                        </button>
+
+                        <button
+                            type="button"
+                            className={styles.playButton}
+                            onClick={() => speakText(resultText)}
+                            disabled={!resultText}
+                        >
+                            読み上げ
                         </button>
 
                         <button
