@@ -177,7 +177,7 @@ export default function VoiceInput({ value, onChange, textareaRef }) {
                 disabled={!SpeechRecognition}
                 aria-pressed={listening}
             >
-                {listening ? "録音中…（停止）" : "マイクで入力"}
+                {listening ? "録音中…（停止）" : "音声入力"}
             </button>
 
             {errorMessage && <div className={styles.info}>{errorMessage}</div>}
