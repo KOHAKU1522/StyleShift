@@ -13,6 +13,7 @@ export default function VoiceInput({ value, onChange, textareaRef }) {
     const valueRef = useRef(value);
     const sessionBaseRef = useRef("");
     const shouldListenRef = useRef(false);
+    const listeningRef = useRef(false);
     const restartTimerRef = useRef(null);
     const startTimerRef = useRef(null);
 
@@ -39,10 +40,27 @@ export default function VoiceInput({ value, onChange, textareaRef }) {
         };
     }, []);
 
-    const startListening = () => {
+    const startListening = async () => {
         if (!SpeechRecognition) return;
 
+        if (!navigator.mediaDevices?.getUserMedia) {
+            setErrorMessage("このブラウザーではマイク入力を利用できません。");
+            return;
+        }
+
         sessionBaseRef.current = valueRef.current;
+
+        try {
+            const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+            stream.getTracks().forEach((track) => track.stop());
+        } catch (e) {
+            setErrorMessage(
+                e?.name === "NotAllowedError"
+                    ? "マイクの使用を許可してください。"
+                    : "マイクに接続できませんでした。"
+            );
+            return;
+        }
 
         if (!recognitionRef.current) {
             const r = new SpeechRecognition();
@@ -55,6 +73,7 @@ export default function VoiceInput({ value, onChange, textareaRef }) {
                     startTimerRef.current = null;
                 }
                 setErrorMessage("");
+                listeningRef.current = true;
                 setListening(true);
             };
 
@@ -86,6 +105,7 @@ export default function VoiceInput({ value, onChange, textareaRef }) {
 
             r.onend = () => {
                 if (!shouldListenRef.current) {
+                    listeningRef.current = false;
                     setListening(false);
                     return;
                 }
@@ -113,7 +133,7 @@ export default function VoiceInput({ value, onChange, textareaRef }) {
         try {
             recognitionRef.current.start();
             startTimerRef.current = setTimeout(() => {
-                if (shouldListenRef.current && !listening) {
+                if (shouldListenRef.current && !listeningRef.current) {
                     shouldListenRef.current = false;
                     setErrorMessage("マイクを開始できませんでした。ブラウザーのマイク権限を確認してください。");
                 }
@@ -139,7 +159,7 @@ export default function VoiceInput({ value, onChange, textareaRef }) {
         try {
             recognitionRef.current.stop();
         } catch (e) {}
-        setListening(false);
+        listeningRef.current = false;
     };
 
     const handleToggle = () => {
